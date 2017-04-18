@@ -10,10 +10,11 @@
 % 3) Separamos la lista en sublistas
 
 %vibora/4(colores,lista_m,lista_n,resultado)
-vibora(C,TM,TN,R):-
+vibora(C,TM,TN,RF):-
   crearLista(TN,TM,R1),
   rellenar(C,C,R1,R2),
-  separar(TM,TN,R2,R).
+  separar(TM,TN,R2,R),
+  comprobar(a,R,RF).
 
 %crearLista/3(lista_m,lista_n,resultado)
 crearLista([],_,[]).
@@ -25,10 +26,6 @@ crearLista([_|TMs],TN,R):-
 crearListaAux([],[]).
 crearListaAux([_|TNs],[x|Rs]):-
   crearListaAux(TNs,Rs).
-
-concatenar([],Cs,Cs).
-concatenar([A|As],Bs,[A|Cs]):-
-  concatenar(As,Bs,Cs).
 
 %rellenar/4(colores,copia_colores,lista,resultado)
 rellenar(_,_,[],[]).
@@ -47,6 +44,28 @@ separarAux([],L,L,[]).
 separarAux([_|TMs],[E|Es],L,[E|Rs]):-
   separarAux(TMs,Es,L,Rs).
 
+% comprobar/3(flag,lista_original,resultado)
+comprobar(_,[],[]).
+comprobar(a,[L|Ls],[L|Rs]) :-
+  comprobar(b,Ls,Rs).
+comprobar(b,[L|Ls],[R|Rs]) :-
+  reversible(L,R),
+  comprobar(b,Ls,Rs).
+
+% Metodos Auxiliares
+concatenar([],Cs,Cs).
+concatenar([A|As],Bs,[A|Cs]):-
+  concatenar(As,Bs,Cs).
+
+reversible([],[]).
+reversible([H|T],R) :-
+  reversible(T,RevT),
+  concatenar(RevT,[H],R).
+
 % Ejemplo modo vibora(IN,IN,IN,OUT)
 % ?- vibora([a,b,c,d],[_,_,_,_,_],[_,_,_],R).
 % R = [[a,b,c,d,a],[b,a,d,c,b],[c,d,a,b,c]]? 
+
+% Ejemplo modo vibora(OUT,IN,IN,IN)
+% ?- vibora(R,[_,_,_,_,_],[_,_,_],[[a,b,c,d,a],[b,a,d,c,b],[c,d,a,b,c]]).
+% R = [a,b,c,d] 

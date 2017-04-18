@@ -13,8 +13,9 @@
 %     matriz[i][j]=datos[posicion_que_toque]
 
 % vibora/4(colores,lista_m,lista_n,resultado)
-vibora(C,TM,TN,R):-
-  bucle_i(C,C,TN,TM,R).
+vibora(C,TM,TN,RF):-
+  bucle_i(C,C,TN,TM,R),
+  comprobar(a,R,RF).
 
 % bucle_i/5(colores,copia_colores,lista_m,lista_n,resultado)
 bucle_i(_,_,[],_,[]).
@@ -32,6 +33,28 @@ bucle_j(_,[],[],[],[]).
 bucle_j(O,[C|Cs],[_|Ts],[C|Rs],Resto):-
   bucle_j(O,Cs,Ts,Rs,Resto).
 
+% comprobar/3(flag,lista_original,resultado)
+comprobar(_,[],[]).
+comprobar(a,[L|Ls],[L|Rs]) :-
+  comprobar(b,Ls,Rs).
+comprobar(b,[L|Ls],[R|Rs]) :-
+  reversible(L,R),
+  comprobar(b,Ls,Rs).
+
+% Metodos Auxiliares
+concatenar([],Cs,Cs).
+concatenar([A|As],Bs,[A|Cs]):-
+  concatenar(As,Bs,Cs).
+
+reversible([],[]).
+reversible([H|T],R) :-
+  reversible(T,RevT),
+  concatenar(RevT,[H],R).
+
 % Ejemplo modo vibora(IN,IN,IN,OUT)
 % ?- vibora([a,b,c,d],[_,_,_,_,_],[_,_,_],R).
 % R = [[a,b,c,d,a],[b,a,d,c,b],[c,d,a,b,c]]? 
+
+% Ejemplo modo vibora(OUT,IN,IN,IN)
+% ?- vibora(R,[_,_,_,_,_],[_,_,_],[[a,b,c,d,a],[b,a,d,c,b],[c,d,a,b,c]]).
+% R = [a,b,c,d] 
