@@ -50,7 +50,7 @@ comprobar(a,[L|Ls],[L|Rs]) :-
   comprobar(b,Ls,Rs).
 comprobar(b,[L|Ls],[R|Rs]) :-
   reversible(L,R),
-  comprobar(b,Ls,Rs).
+  comprobar(a,Ls,Rs).
 
 % Metodos Auxiliares
 concatenar([],Cs,Cs).
@@ -65,7 +65,3 @@ reversible([H|T],R) :-
 % Ejemplo modo vibora(IN,IN,IN,OUT)
 % ?- vibora([a,b,c,d],[_,_,_,_,_],[_,_,_],R).
 % R = [[a,b,c,d,a],[b,a,d,c,b],[c,d,a,b,c]]? 
-
-% Ejemplo modo vibora(OUT,IN,IN,IN)
-% ?- vibora(R,[_,_,_,_,_],[_,_,_],[[a,b,c,d,a],[b,a,d,c,b],[c,d,a,b,c]]).
-% R = [a,b,c,d] 
