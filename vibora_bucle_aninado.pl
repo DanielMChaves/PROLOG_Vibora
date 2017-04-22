@@ -13,7 +13,9 @@
 %     matriz[i][j]=datos[posicion_que_toque]
 
 % vibora/4(colores,lista_m,lista_n,resultado)
+vibora([],_,_,[]).
 vibora(C,TM,TN,RF):-
+  C \= [],
   bucle_i(C,C,TN,TM,R),
   comprobar(a,R,RF).
 
@@ -25,10 +27,10 @@ bucle_i(O,C,[_|TMs],TN,[R|Rs]):-
 
 % bucle_j/4(colores,copia_colores,lista_n,resultado,resto_copia)
 bucle_j(O,[],T,R,Resto):-
-  T\=[],
+  T \= [],
   bucle_j(O,O,T,R,Resto).
 bucle_j(_,C,[],[],C):-
-  C\=[].
+  C \= [].
 bucle_j(_,[],[],[],[]).
 bucle_j(O,[C|Cs],[_|Ts],[C|Rs],Resto):-
   bucle_j(O,Cs,Ts,Rs,Resto).

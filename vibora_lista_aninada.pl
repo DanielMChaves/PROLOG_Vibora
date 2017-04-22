@@ -10,7 +10,9 @@
 % 3) Separamos la lista en sublistas
 
 %vibora/4(colores,lista_m,lista_n,resultado)
+vibora([],_,_,[]).
 vibora(C,TM,TN,RF):-
+  C \= [],
   crearLista(TN,TM,R1),
   rellenar(C,C,R1,R2),
   separar(TM,TN,R2,R),
